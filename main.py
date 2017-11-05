@@ -15,14 +15,18 @@ bright_red = 233, 29, 41
 cream = 255, 255, 204
 green = 18, 230, 3
 bright_green = 99, 255, 32
+orange = 253, 94, 83
+bright_orange = 255, 117, 56
 #############
 # FUENTES
 freesans = pygame.font.SysFont("freesans", 54)
 #############
 # BOTONES
-cerrar = obj.Boton(red, bright_red, 860, 440, 200, 110, quit, "Exit")  # RECORDAR DEJAR RESOLUCION DE TODAS LAS
-#                                                                        IMAGENES EN FUNCION DE LA RESOLUCION ACTUAL
-comenzar = obj.Boton(green, bright_green, 400, 440, 200, 110, func.boton_comenzar, "Comenzar")
+cerrar = obj.Boton(red, bright_red, 1600, 440, 100, 55, quit, "Exit")
+comenzar = obj.Boton(green, bright_green, 400, 440, 100, 55, func.boton_comenzar, "Comenzar")
+pausar = obj.Boton(orange, bright_orange, 1600, 100, 100, 55, func.boton_pausa, "Pausa")
+despausar = obj.Boton(orange, bright_orange, 1600, 100, 100, 55, func.boton_despausa, "Despausa")
+boton_menu = obj.Boton(green, bright_green, 1600, 180, 100, 55, func.boton_menu, "Menu")
 #############
 # CUADROS
 main_cuadro = obj.Cuadro(("Matias", black), fullScreen_sz, cream)
@@ -47,10 +51,10 @@ while True:
         botones = [cerrar, comenzar]
         cuadros = []
     elif pause_menu:
-        botones = [cerrar]
+        botones = [cerrar, despausar, boton_menu]
         cuadros = []
     elif play_menu:
-        botones = [cerrar]
+        botones = [cerrar, pausar]
         cuadros = [main_cuadro]
     for boton in botones:
         if boton.hover(posicion_mouse):
