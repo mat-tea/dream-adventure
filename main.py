@@ -45,6 +45,7 @@ while True:
     fps_counter.update(str(int(clock.get_fps())))
     screen.blit(fps_counter.texto, (1, 1))  # contador de fps
     posicion_mouse = pygame.mouse.get_pos()
+    main_menu, pause_menu, play_menu = menus[0], menus[1], menus[2]
     if main_menu:
         botones = [cerrar, comenzar]
         cuadros = []
