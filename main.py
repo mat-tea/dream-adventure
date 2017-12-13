@@ -34,7 +34,7 @@ main_cuadro = obj.Cuadro(("Matias", black), fullScreen_sz, cream)
 
 screen = pygame.display.set_mode(fullScreen_sz, pygame.HWSURFACE | pygame.DOUBLEBUF)
 fps_counter = obj.Texto(clock.get_fps(), freesans, black)
-menus = [True, False, False]  # especifica el menu
+menus = 0  # especifica el menu
 #      0           1          2
 # [main_menu, pause_menu, play_menu]
 
@@ -45,14 +45,13 @@ while True:
     fps_counter.update(str(int(clock.get_fps())))
     screen.blit(fps_counter.texto, (1, 1))  # contador de fps
     posicion_mouse = pygame.mouse.get_pos()
-    main_menu, pause_menu, play_menu = menus[0], menus[1], menus[2]
-    if main_menu:
+    if menus==0:
         botones = [cerrar, comenzar]
         cuadros = []
-    elif pause_menu:
+    elif menus==1:
         botones = [cerrar, despausar, boton_menu]
         cuadros = []
-    elif play_menu:
+    elif menus==2:
         botones = [cerrar, pausar]
         cuadros = [main_cuadro]
     for boton in botones:
