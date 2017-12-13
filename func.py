@@ -1,13 +1,11 @@
 def boton_comenzar():
-    return [False, False, True]
-
+    return 2
 
 def boton_pausa():
-    return [False, True, False]
-
+    return 1
 
 def boton_despausa():
-    return [False, False, True]
+    return 2
 
 def boton_menu():
-    return [True, False, False]
+    return 0
