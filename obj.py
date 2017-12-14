@@ -12,7 +12,7 @@ green = 18, 230, 3
 bright_green = 99, 255, 32
 #############
 # FUENTES
-freesans = pygame.font.SysFont("freesans", 54)
+freesans = pygame.font.SysFont("freesans", 32)
 
 
 #############
@@ -33,7 +33,7 @@ class Texto:  # texto general
 
 
 class Boton:  # FALTA OPTIMIZAR CON MASK PARA BOTONES NO RECTANGULARES Y CUSTOMIZADOS
-    def __init__(self, color1, color2, x, y, width, height, accion, texto=""):
+    def __init__(self, color1, color2, x, y, width, height, accion, texto="", mantenido=False, resolucion=False, change_res=None):
         if texto != "":  # se revisa si el boton tiene texto
             self.id = 1
             self.texto = Texto(str(texto), freesans, black)
@@ -48,6 +48,10 @@ class Boton:  # FALTA OPTIMIZAR CON MASK PARA BOTONES NO RECTANGULARES Y CUSTOMI
         self.height = height
         self.accion = accion
         self.superficie = (x, x + width), (y, y + height)
+        self.mantenido = mantenido
+        self.manteniendo = False
+        self.resolucion = resolucion
+        self.change_res = change_res
 
     def mostrar_texto(self, display):  # muestra el texto del boton
         display.blit(self.texto.texto, (self.x + self.width // 4, self.y + self.height // 4))
@@ -60,14 +64,21 @@ class Boton:  # FALTA OPTIMIZAR CON MASK PARA BOTONES NO RECTANGULARES Y CUSTOMI
         return hover
 
     def dibujar(self, display, hover=None):  # dibuja el boton sobre el display
-        if hover is not None:
+        if hover is not None or self.manteniendo == True:
             self.color = self.color2
-        else:
+        elif self.manteniendo == False:
             self.color = self.color1
         pygame.draw.rect(display, self.color, [self.x, self.y, self.width, self.height])
 
-    def ejecutar(self):  # para hacer funcionar al boton
+    def ejecutar(self): # para hacer funcionar al boton
+        if self.mantenido:
+            self.manteniendo = True
+        if self.resolucion != False:
+            self.change_res(self.resolucion[0], self.resolucion[1])
         return self.accion()
+
+    def reset_color(self):
+        self.manteniendo = False
 
 
 class Cuadro:
