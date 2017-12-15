@@ -6,11 +6,11 @@ import func
 pygame.init()  # se inicia pygame
 clock = pygame.time.Clock()  # se establece un reloj para medir el tiempo
 screenInfo = pygame.display.Info()  # info de la resolucion de la pantalla
-res_screen_resolution = res_w, res_h = int(screenInfo.current_w * 0.25), int(
-    screenInfo.current_h * 0.5)  # resolucion de la surface de resolucion
-win_pos_left = 1 + ((screenInfo.current_w - res_w) // 2)
-win_pos_top = 1 + ((screenInfo.current_h - res_h) // 2)
-os.environ['SDL_VIDEO_WINDOW_POS'] = '{},{}'.format(win_pos_left, win_pos_top)  # centra la surface
+screen_res = screen_w, screen_h = screenInfo.current_w, screenInfo.current_h
+res_screen_resolution = res_w, res_h = int(screen_w * 0.25), int(screen_h * 0.5)
+win_pos_left = 1 + ((screen_w - res_w) // 2)
+win_pos_top = 1 + ((screen_h - res_h) // 2)
+os.environ['SDL_VIDEO_WINDOW_POS'] = '{},{}'.format(win_pos_left, win_pos_top)  # centra la display
 res_screen = pygame.display.set_mode((res_w, res_h), pygame.HWSURFACE | pygame.DOUBLEBUF)
 
 print('res_screen resolution: ' + str(res_screen_resolution))
@@ -35,12 +35,7 @@ X11_Gray = 190, 190, 190
 # FUENTES
 freesans = pygame.font.SysFont("freesans", 54)
 #############
-# BOTONES
-cerrar = obj.Boton(red, bright_red, 1000, 300, 100, 55, quit, "Exit")
-comenzar = obj.Boton(green, bright_green, 400, 300, 100, 55, func.boton_comenzar, "Comenzar")
-pausar = obj.Boton(orange, bright_orange, 1000, 100, 100, 55, func.boton_pausa, "Pausa")
-despausar = obj.Boton(orange, bright_orange, 1000, 100, 100, 55, func.boton_despausa, "Despausa")
-boton_menu = obj.Boton(green, bright_green, 1000, 180, 100, 55, func.boton_menu, "Menu")
+# BOTONES RESOLUCION
 cuatrotres = obj.Boton(HTML_DarkGray, HTML_Gray, 14, 14, res_w // 3.2, res_h // 10.2, func.boton_43, "4:3", True)
 dieciseisnueve = obj.Boton(HTML_DarkGray, HTML_Gray, res_w // 3.2 + 16, 14, res_w // 3.2 + 1, res_h // 10.2,
                            func.boton_169, "16:9", True)
@@ -118,6 +113,7 @@ res1610_4 = obj.Boton(HTML_DarkGray, HTML_Gray, 14, res_h // 10.2 * 4 - 8, res_w
 res1610_5 = obj.Boton(HTML_DarkGray, HTML_Gray, 14, res_h // 10.2 * 5 - 16, res_w - 28,
                       (res_h - res_h // 10.2 - 20) // 11, func.cambio_de_resolucion, "2560x1600", True, (2560, 1600),
                       func.change_res)
+#############
 # resolucion
 menu_res = 0
 while True:
@@ -156,12 +152,19 @@ while True:
                         boton.reset_color()
     pygame.display.flip()
 #############
+# BOTONES JUEGO
+cerrar = obj.Boton(red, bright_red, *func.res_scaling(screen_sz, (2400, 1080), (500, 140)), quit, "Exit")
+comenzar = obj.Boton(green, bright_green, *func.res_scaling(screen_sz, (960, 1080), (500, 140)), func.boton_comenzar, "Comenzar")
+pausar = obj.Boton(orange, bright_orange, *func.res_scaling(screen_sz, (2400, 260), (300, 140)), func.boton_pausa, "Pausa")
+despausar = obj.Boton(orange, bright_orange, *func.res_scaling(screen_sz, (2400, 410), (300, 140)), func.boton_despausa, "Despausa")
+boton_menu = obj.Boton(green, bright_green, *func.res_scaling(screen_sz, (2400, 260), (300, 140)), func.boton_menu, "Menu")
+#############
 # CUADROS
-main_cuadro = obj.Cuadro(("Matias", black), screen_sz, cream)
+main_cuadro = obj.Cuadro(("Matias", black), *func.res_scaling(screen_sz, (480, 1800), (2880, 360)), cream)
 #############
 win_pos_left = 1 + ((screenInfo.current_w - width) // 2)
 win_pos_top = 1 + ((screenInfo.current_h - height) // 2)
-os.environ['SDL_VIDEO_WINDOW_POS'] = '{},{}'.format(win_pos_left, win_pos_top)
+os.environ['SDL_VIDEO_WINDOW_POS'] = '{},{}'.format(win_pos_left, win_pos_top)  # centra el objeto screen
 screen = pygame.display.set_mode(screen_sz, pygame.HWSURFACE | pygame.DOUBLEBUF)
 fps_counter = obj.Texto(clock.get_fps(), freesans, black)
 menus = 0  # especifica el menu
