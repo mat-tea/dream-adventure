@@ -77,17 +77,18 @@ class Boton:  # FALTA OPTIMIZAR CON MASK PARA BOTONES NO RECTANGULARES Y CUSTOMI
             self.change_res(self.resolucion[0], self.resolucion[1])
         return self.accion()
 
-    def reset_color(self):
+    def reset_color(self):  # resetea el color de un boton que se queda mantenido despues de apretarlo
         self.manteniendo = False
 
 
 class Cuadro:
-    def __init__(self, titulo, screen_size, color):
+    def __init__(self, titulo, x, y, width, height, color):
         self.guion = 0  # contador para ver en que linea del guion va, cada vez que se actualiza el texto, se le suma 1
         self.color = color  # cont^: cada vez que el texto es actualizado
-        self.width = screen_size[0] * 11 // 12
-        self.height = screen_size[1] // 3.2
-        self.superficie = self.x, self.y = 0, screen_size[1] - self.height
+        self.width = width
+        self.height = height
+        self.x = x
+        self.y = y
         self.texto = Texto("", freesans, black)
         self.titulo = Texto(titulo[0], freesans, titulo[1])
 
